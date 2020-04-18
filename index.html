@@ -1,0 +1,97 @@
+<html>
+  <head>
+    <title>Generate Unique Random Number</title>
+    <meta keywords="housie, tambola, games, gambling, random numbers, generators" />
+    <meta description="Generate a unique random number on every draw. Most suitable for games like Housie, Tambola" />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+      integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+      crossorigin="anonymous">
+  </head>
+  <body>
+    <div class="container">
+      <div class="row" style="display: flex;justify-content: center;">
+        <div class="col-xs-12">
+          <h1 class="my-4" style="text-align: center;">
+            Generate Unique Number
+          </h1>
+          <div class="card ml-4" style="width: 24rem;display: flex; place-content: center;">
+            <div class="card-body">
+              <h2 class="card-text" style="text-align: center; font-size: 6rem;">
+                --
+              </h2>
+              <form onsubmit="getUniqueNumber(event);" class="mt-2">
+                <div class="form-group mx-sm-3 mb-2">
+                  <label for="minValue"><em>Minimum Number</em></label>
+                  <input
+                    type="number"
+                    class="form-control"
+                    id="minValue"
+                    name="minValue"
+                    value="1"
+                    min="0"
+                    max="10000"
+                    onchange="handleChange();"
+                    required>
+                </div>
+                <div class="form-group mx-sm-3 mb-2">
+                  <label for="inputPassword2"><em>Maximum Number</em></label>
+                  <input
+                    type="number"
+                    class="form-control"
+                    id="maxValue"
+                    name="maxValue"
+                    value="100"
+                    min="0"
+                    max="10000"
+                    onchange="handleChange();"
+                    required>
+                </div>
+                <div class="form-group mx-sm-3 mb-2">
+                  <button type="submit" class="btn btn-dark" style="width:100%">GENERATE</button>
+                  <p id="message" class="text-info mt-2"></p>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+      <footer class="row mt-4">
+        <div class="col-xs-12" style="width:100%;text-align: center;">
+          <pre class="text-dark">Made with ❤️ by <a class="link" href="https://surajsharma.net">Suraj Sharma</a></pre>
+        </div>
+      </footer>
+    </div>
+    <script>
+      let uniqueNumbers = new Set();
+      function handleChange () {
+        uniqueNumbers = new Set();
+      }
+
+      function getUniqueNumber(event) {
+        document.getElementById('message').innerHTML='';
+        event.preventDefault();
+        let formObject = event.target;
+        let minValue = parseInt(formObject.minValue.value);
+        let maxValue = parseInt(formObject.maxValue.value);
+        let randomNum = -1;
+        if (maxValue < minValue) {
+          document.getElementById('message').innerHTML = "Check the numbers";
+          return;
+        }
+        if (uniqueNumbers.size === (maxValue-minValue+1)) {
+          document.getElementById('message').innerHTML = "That's the last number!";
+          return;
+        }
+        do {
+          randomNum = Math.floor(Math.random()*(maxValue-minValue+1))+minValue;
+          console.log(randomNum);
+        } while(uniqueNumbers.has(randomNum));
+        uniqueNumbers.add(randomNum);
+        console.log(uniqueNumbers);
+        document.getElementsByTagName('h2')[0].innerHTML = randomNum;
+      }
+    </script>
+  </body>
+</html>
